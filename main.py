@@ -1,11 +1,36 @@
 from classes.game import Person, bcolors
+from classes.magic import Spell
+from classes.inventory import Item
+import random
 
-magic = [{"name": "Fire", "cost": 10, "dmg": 100},
-         {"name": "Thunder", "cost": 10, "dmg": 124},
-         {"name": "Blizzard", "cost": 10, "dmg": 100}]
+# Create black magic
+fire = Spell("Fire", 25, 600, "black")
+thunder = Spell("Thunder", 25, 600, "black")
+blizzard = Spell("Blizzard", 25, 600, "black")
+meteor = Spell("Meteor", 40, 1200, "black")
+quake = Spell("Quake", 14, 140, "black")
 
-player = Person(460, 65, 60, 34, magic)
-enemy = Person(1200, 65, 45, 25, magic)
+# Create white magic
+cure = Spell("Cure", 25, 620, "white")
+cura = Spell("Cura", 32, 1500, "white")
+curaga = Spell("Curaga", 50, 6000, "white")
+
+# Create some items
+potion = Item("Potion", "potion", "Heals 50 HP", 50)
+hipotion = Item("Hi-Potion", "potion", "Heals 100 HP", 100)
+superpotion = Item("Super Potion", "potion", "Heals 1000 HP", 1000)
+elixer = Item("Elixer", "elixer", "Fully restores HP/MP of one party member", 9999)
+hielixer = Item("MegaElixer", "elixer", "Fully restores party's HP/MP", 9999)
+grenade = Item("Grenade", "attack", "Deals 500 damage", 500)
+
+player_spells = [fire, thunder, blizzard, meteor, cure, cura]
+enemy_spells = [fire, meteor, curaga]
+player_items = [{"item": potion, "quantity": 15}, {"item": hipotion, "quantity": 5},
+                {"item": superpotion, "quantity": 5}, {"item": elixer, "quantity": 5},
+                {"item": hielixer, "quantity": 2}, {"item": grenade, "quantity": 5}]
+
+player = Person("Valos", 460, 65, 60, 34, player_spells, player_items)
+enemy = Person("Imp:", 1250, 130, 560, 325, enemy_spells, [])
 
 running = True
 i = 0
@@ -17,6 +42,8 @@ while running:
     player.choose_action()
     choice = input("Choose action:")
     index = int(choice) - 1
+
+    running= False
 
     if index == 0:
         dmg = player.generate_damage()
