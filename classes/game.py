@@ -68,7 +68,7 @@ class Person:
 
     def choose_action(self):
         i = 1
-        print("\n" + " " + bcolors.BOLD + self.name + bcolors.ENDC)
+        print("\n" + bcolors.BOLD + self.name + bcolors.ENDC)
         print(bcolors.OKBLUE + bcolors.BOLD + "ACTIONS:" + bcolors.ENDC)
         for item in self.actions:
             print("     " + str(i) + ".", item)
@@ -87,3 +87,9 @@ class Person:
         for item in self.items:
             print("     " + str(i) + ".", item["item"].name + ":", item["item"].description, "(x" + str(item["quantity"]) + ")")
             i += 1
+
+    def get_state(self):
+        print("                     _________________________              __________ ")
+        print(bcolors.BOLD + self.name + "        " +
+              str(self.hp) + "/" + str(self.maxHp) + "|" + bcolors.OKGREEN + "█████                    " + bcolors.ENDC + bcolors.BOLD + "|       " +
+              str(self.mp) + "/" + str(self.maxMp) + "|" + bcolors.OKBLUE + "███████   " + bcolors.ENDC + "|")
