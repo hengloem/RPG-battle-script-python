@@ -18,10 +18,11 @@ curaga = Spell("Curaga", 25, 600, "white")
 # Create some items
 potion = Item("Potion", "potion", "Heals 50 HP", 50)
 hipotion = Item("Hi-Potion", "potion", "Heals 100 HP", 100)
-superpotion = Item("Super Potion", "potion", "Heals 1000 HP", 1000)
+superpotion = Item("Super Potion", "potion", "Heals 1000 HP", 500)
 elixer = Item("Elixer", "elixer", "Fully restores HP/MP of one party member", 9999)
 hielixer = Item("MegaElixer", "elixer", "Fully restores party's HP/MP", 9999)
 grenade = Item("Grenade", "attack", "Deals 500 damage", 500)
+
 
 player_spells = [fire, thunder, blizzard, meteor, cure, cura]
 enemy_spells = [fire, meteor, curaga]
@@ -29,8 +30,9 @@ player_items = [{"item": potion, "quantity": 15}, {"item": hipotion, "quantity":
                 {"item": superpotion, "quantity": 5}, {"item": elixer, "quantity": 5},
                 {"item": hielixer, "quantity": 2}, {"item": grenade, "quantity": 5}]
 
+# Instantiate people
 player = Person("Valos", 460, 65, 60, 34, player_spells, player_items)
-enemy = Person("Imp:", 12, 30, 60, 25, enemy_spells, [])
+enemy = Person("Imp:", 1200, 65, 45, 25, enemy_spells, [])
 
 running = True
 i = 0
@@ -53,6 +55,9 @@ while running:
         player.choose_magic()
         magic_choice = int(input("Choose magic:")) - 1
 
+        if magic_choice == -1:
+            continue
+
         spell = player.magic[magic_choice]
         magic_dmg = spell.generate_damage()
 
@@ -70,6 +75,17 @@ while running:
         elif spell.type == "black":
             enemy.take_damage(magic_dmg)
             print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_dmg), "point of damage" + bcolors.ENDC)
+    elif index == 2:
+        player.choose_item()
+        item_choice = int(input("Choose an item:")) - 1
+
+        if item_choice == -1:
+            continue
+
+        item = player.items[item_choice]
+        if item.type == "potion":
+            player.heal(item.prop)
+            print(bcolors.OKGREEN + "\n"+ item.name + "heals for", str(item.prop), "HP" + bcolors.ENDC)
 
     enemy_choice = 1
 

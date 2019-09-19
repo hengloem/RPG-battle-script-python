@@ -1,5 +1,6 @@
 import random
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -67,23 +68,26 @@ class Person:
 
     def choose_action(self):
         i = 1
+
         print("\n" + " " + bcolors.BOLD + self.name + bcolors.ENDC)
         print(bcolors.OKBLUE + bcolors.BOLD + "ACTIONS:" + bcolors.ENDC)
         for item in self.actions:
-            print(str(i) + ":", item)
+            print("     " + str(i) + ".", item)
             i += 1
 
     def choose_magic(self):
         i = 1
+
         print("\n" + bcolors.OKBLUE + bcolors.BOLD + "MAGIC:" + bcolors.ENDC)
         for spell in self.magic:
-            print(" " + str(i) + ":", spell.name, "(cost:", str(spell.cost) + ")")
+            print("     " + str(i) + ":", spell.name, "(cost:", str(spell.cost) + ")")
             i += 1
 
     def choose_item(self):
         i = 1
+
         print("\n" + bcolors.OKGREEN + bcolors.BOLD + "ITEMS:" + bcolors.ENDC)
         for item in self.items:
-            print("        " + str(i) + ".", item["item"].name + ":", item["item"].description,
-                  " (x" + str(item["quantity"]) + ")")
+            print("     " + str(i) + ".", item["item"].name + ":", item["item"].description,
+                  "(x" + str(item["quantity"]) + ")")
             i += 1
