@@ -89,7 +89,30 @@ class Person:
             i += 1
 
     def get_state(self):
-        print("                     _________________________              __________ ")
+        hp_bar = ""
+        bare_ticks = (self.hp / self.maxHp) * 100 / 4
+
+        mp_bar = ""
+        mp_ticks = (self.mp / self.maxMp) * 100 / 4
+
+
+        while bare_ticks > 0:
+            hp_bar += "█"
+            bare_ticks -= 1
+
+        while len(hp_bar) < 25:
+            hp_bar += " "
+
+        while mp_ticks > 0:
+            mp_bar += "█"
+            mp_ticks -= 1
+
+        while len(mp_bar) < 10:
+            mp_bar += " "
+
+        # current hit point
+
+        print("                        _________________________                 __________ ")
         print(bcolors.BOLD + self.name + "        " +
-              str(self.hp) + "/" + str(self.maxHp) + "|" + bcolors.OKGREEN + "█████                    " + bcolors.ENDC + bcolors.BOLD + "|       " +
-              str(self.mp) + "/" + str(self.maxMp) + "|" + bcolors.OKBLUE + "███████   " + bcolors.ENDC + "|")
+              str(self.hp) + "/" + str(self.maxHp) + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|       " +
+              str(self.mp) + "/" + str(self.maxMp) + " |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC + "|")
