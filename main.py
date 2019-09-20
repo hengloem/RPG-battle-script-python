@@ -53,10 +53,13 @@ while running:
     print("NAME                    HP                                        MP")
 
     for player in players:
-        player.get_state()
+        player.get_stats()
+
+    print("\n")
+
+    enemy.get_enemy_stats()
 
     for player in players:
-
         player.choose_action()
         choice = input("Choose action:")
         index = int(choice) - 1
@@ -67,6 +70,7 @@ while running:
             dmg = player.generate_damage()
             enemy.take_damage(dmg)
             print("You attacked for", dmg, "point of damage.")
+            continue
 
         elif index == 1:
             player.choose_magic()
@@ -112,21 +116,25 @@ while running:
                 player.heal(item.prop)
                 print(bcolors.OKGREEN + "\n" + item.name + " heals for", str(item.prop), "HP" + bcolors.ENDC)
             elif item.type == "elixer":
-                player.hp = player.maxHp
-                player.mp = player.maxMp
+
+                if item.name == "MegaElixer":
+                    for i in players:
+                        i.hp = i.maxHp
+                        i.mp = i.maxMp
+                else:
+                    player.hp = player.maxHp
+                    player.mp = player.maxMp
                 print(bcolors.OKGREEN + "\n" + item.name + " fully restore HP/MP" + bcolors.ENDC)
             elif item.type == "attack":
                 enemy.take_damage(item.prop)
                 print(bcolors.FAIL + "\n" + item.name + " deals", str(item.prop), "point of damage" + bcolors.ENDC)
 
     enemy_choice = 1
-
+    target = random.randrange(0, 2)
     enemy_dmg = enemy.generate_damage()
-    player1.take_damage(enemy_dmg)
-    print("Enemy attacks for", enemy_dmg, "point of damage.")
 
-    print("------------------------------")
-    print("Enemy HP:", bcolors.FAIL + str(enemy.get_hp()) + "/" + str(enemy.get_max_hp()) + bcolors.ENDC)
+    players[target].take_damage(enemy_dmg)
+    print("Enemy attacks for", enemy_dmg, "point of damage.")
 
     if enemy.get_hp() == 0:
         print(bcolors.OKGREEN + "You win!" + bcolors.ENDC)
