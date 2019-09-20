@@ -90,6 +90,16 @@ class Person:
                   "(x" + str(item["quantity"]) + ")")
             i += 1
 
+    def choose_target(self, enemies):
+        i = 1
+        print("\n" + bcolors.FAIL + bcolors.BOLD + "    TARGET:" + bcolors.ENDC)
+        for enemy in enemies:
+            if enemy.get_hp() != 0:
+                print("        " + str(i) + ".", enemy.name)
+                i += 1
+        choice = int(input("    Choose target:")) - 1
+        return choice
+
     # Enemy HP Stats Bar
     def get_enemy_stats(self):
         hp_bar = ""
@@ -116,7 +126,7 @@ class Person:
         else:
             current_hp = hp_string
 
-        print("                       __________________________________________________ ")
+        print("                      __________________________________________________ ")
         print(bcolors.BOLD + self.name + "  " +
               current_hp + " |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|")
 

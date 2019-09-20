@@ -39,9 +39,13 @@ player1 = Person("Heng:", 3260, 132, 60, 34, player_spells, player_items)
 player2 = Person("Thor:", 4160, 188, 60, 44, player_spells, player_items)
 player3 = Person("Kong:", 3089, 174, 70, 54, player_spells, player_items)
 
-enemy = Person("Balmond:", 1200, 701, 525, 25, enemy_spells, [])
+enemy1 = Person("Balmond", 1250, 130, 560, 325, enemy_spells, [])
+enemy2 = Person("Magreen", 8200, 701, 525, 25, enemy_spells, [])
+enemy3 = Person("Thareed", 1250, 130, 560, 325, enemy_spells, [])
 
-players = [player1, player2,  player3]
+
+players = [player1, player2, player3]
+enemies = [enemy1, enemy2, enemy3]
 
 running = True
 i = 0
@@ -57,7 +61,8 @@ while running:
 
     print("\n")
 
-    enemy.get_enemy_stats()
+    for enemy in enemies:
+        enemy.get_enemy_stats()
 
     for player in players:
         player.choose_action()
@@ -68,8 +73,10 @@ while running:
 
         if index == 0:
             dmg = player.generate_damage()
-            enemy.take_damage(dmg)
-            print("You attacked for", dmg, "point of damage.")
+
+            enemy = player.choose_target(enemies)
+            enemies[enemy].take_damage(dmg)
+            print("You attacked " + enemies[enemy].name.replace(" ", "") + " for", dmg, "points of damage.")
             continue
 
         elif index == 1:
@@ -94,8 +101,10 @@ while running:
                 player.heal(magic_dmg)
                 print(bcolors.OKBLUE + "\n" + spell.name + " heal for", str(magic_dmg), "HP." + bcolors.ENDC)
             elif spell.type == "black":
-                enemy.take_damage(magic_dmg)
-                print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_dmg), "point of damage" + bcolors.ENDC)
+                enemy = player.choose_target(enemies)
+                enemies[enemy].take_damage(magic_dmg)
+
+                print(bcolors.OKBLUE + "\n" + spell.name + " deals", str(magic_dmg), "points of damage to " + enemies[enemy].name.replace(" ", "") + bcolors.ENDC)
 
         elif index == 2:
             player.choose_item()
@@ -130,8 +139,9 @@ while running:
                 print(bcolors.FAIL + "\n" + item.name + " deals", str(item.prop), "point of damage" + bcolors.ENDC)
 
     enemy_choice = 1
+
     target = random.randrange(0, 2)
-    enemy_dmg = enemy.generate_damage()
+    enemy_dmg = enemies[0].generate_damage()
 
     players[target].take_damage(enemy_dmg)
     print("Enemy attacks for", enemy_dmg, "point of damage.")
